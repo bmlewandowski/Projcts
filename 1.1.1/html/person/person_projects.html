@@ -1,0 +1,21 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Person Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar_person.html'"></div>
+
+    <h3>Projects</h3>
+    
+    <!--HANDLE EMPTY RECORDs-->
+    <p ng-show="project_icons.length < 1 || project_icons == null">No Projects Found</p>
+    
+    <!--Project List-->
+    <div ng-repeat="(key, project_icon) in project_icons | orderBy:'date_modified' :true">
+
+        <div ng-include="'1.1.1/html/components/icon_project.html'"></div>
+
+    </div>
+    
+</div>

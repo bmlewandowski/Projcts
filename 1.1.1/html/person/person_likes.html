@@ -1,0 +1,42 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Person Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar_person.html'"></div>
+
+    <h3>Likes</h3>
+    
+    <!--HANDLE EMPTY RECORDs-->
+    <p ng-show="likes.length < 1 || likes == null">No Likes Found</p>
+        
+ <div ng-repeat="record in likes" >
+        <!--ACTIVITY RECORD-->
+        <div class="activity_area">
+
+            
+            <!--ACTIVITY TITLE AREA-->
+            <div class="activity_title">
+
+                <!--ACTIVITY DATE TIME STAMP-->
+                <div class="activity_title_datetime">
+                    {{record.date_created | date:'MM/dd/yyyy @ h:mma'}}
+                </div>
+
+            </div>
+
+            <!--ACTIVITY RECORD BODY RIGHT SIDE-->
+            <div class="activity_area_right">
+
+                <div style="postion:absolute; width:300px;">
+                    <a href="/person/{{record.person}}">This user<a/> {{record.action}} a <a href="{{record.type}}/{{record.object}}">{{record.type}}</a>
+                </div>     
+
+            </div>
+
+        </div>
+
+    </div>
+                    
+</div>

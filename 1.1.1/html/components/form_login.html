@@ -1,0 +1,65 @@
+<!--LOGIN FORM BEGIN-->
+<form name="loginForm" class="form" ng-submit="login(form.data)">
+
+    <!--LOGIN FORM EMAIL-->
+    <div class="form_element">
+
+        <!--INPUT FOR EMAIL-->
+        <input name="email" ng-focus="loginForm.email.$setUntouched(); loginForm.email.$setValidity('taken', true);" ng-model="form.data.email" class="form_textinput" type="email" placeholder="Email" required minlength="7" maxlength="100" />
+
+        <!--ERROR MESSAGES-->
+        <div class="form_error" ng-messages="loginForm.email.$error" ng-if="!loginForm.email.$pristine && loginForm.email.$touched">
+            <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+        </div>
+
+    </div>
+
+    <!--LOGIN FORM PASSWORD-->
+    <div class="form_element">
+
+        <!--INPUT FOR PASSWORD-->
+        <input name="password" ng-focus="loginForm.password.$setUntouched();" ng-model="form.data.password" class="form_textinput" type="password" placeholder="Password" required minlength="4" maxlength="100" />
+
+        <!--ERROR MESSAGES-->
+        <div class="form_error" ng-messages="loginForm.password.$error" ng-if="!loginForm.password.$pristine && loginForm.password.$touched">
+            <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+        </div>
+
+    </div>
+
+    <!--LOGIN FORM SUBMIT BUTTON-->
+    <div class="form_element" ng-switch="form.loading">
+
+        <!--IF THE AJAX IS NOT SENDING DATA, SHOW THIS-->
+        <div ng-switch-default>
+            <div ng-switch="loginForm.$invalid">
+
+                <!--IF THE FORM IS VALID, SHOW THIS-->
+                <div ng-switch-default>
+                    <input type="image" src="/1.1.1/img/interface/buttons/button_login.png" ng-disabled="" style="border-radius:10px;" />
+                </div>
+
+                <!--IF THE FORM IS NOT VALID, SHOW THIS-->
+                <div ng-switch-when="true">
+                    <img src="/1.1.1/img/interface/buttons/button_login_dim.png" style="border-radius:10px;" />
+                </div>
+
+            </div>
+        </div>
+
+        <!--IF THE AJAX IS SENDING DATA, SHOW THIS-->
+        <div ng-switch-when="true">
+            <img src="/1.1.1/img/interface/buttons/button_loading.gif" style="border-radius:10px;" />
+        </div>
+
+    </div>
+
+    <!--API RETURN ERROR MESSAGES-->
+    <div ng-switch="form.error">
+        <span class="form_error" ng-switch-when="auth/wrong-password" ng-click="modalload('modal_content_passwordreset')" style="cursor: pointer;">Forget your password? Click Here.</span>
+        <span class="form_error" ng-switch-when="auth/invalid-email">Please enter a valid email.</span>
+        <span class="form_error" ng-switch-when="auth/user-not-found">Sorry, email not on file...</span>
+        <span class="form_error" ng-switch-default></span>
+    </div>
+
+</form>

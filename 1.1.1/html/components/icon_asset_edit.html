@@ -1,0 +1,17 @@
+<a href="/console/project/{{project.id}}/editasset/{{asset_icon.id}}">
+
+    <div class="icon_project" style="background: url('{{asset_icon.image_servingURL}}=s360') no-repeat; background-position: center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+
+        <div class="icon_project_label">
+            {{asset_icon.title | limitTo: 20 }}{{asset_icon.title.length > 20 ? '...' : ''}}
+        </div>
+
+        <div class="console_editasset_overlay"><img src="/1.1.1/img/interface/buttons/button_edit.png" style="border-radius: 5px;" /></div>
+
+        <div confirmed-click="deleteAsset(asset_icon.id)" ng-confirm-click="Are you sure you want to delete?" class="console_deleteIcon">
+            <img ng-src="/1.1.1/img/interface/buttons/close.png">
+        </div>
+
+    </div>
+
+</a>

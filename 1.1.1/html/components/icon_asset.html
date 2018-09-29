@@ -1,0 +1,15 @@
+<a href="/project/{{project.id}}/asset/{{asset_icon.id}}">
+    <div class="icon_project" style="    
+        background: url('{{asset_icon.image_servingURL}}=s360') no-repeat;
+        background-position: center center;                             
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;">
+
+        <div class="icon_project_label">
+            {{asset_icon.title | limitTo: 20 }}{{asset_icon.title.length > 20 ? '...' : ''}}
+        </div>
+
+    </div>
+</a>

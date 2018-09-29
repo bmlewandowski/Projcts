@@ -1,0 +1,73 @@
+<!--Person Header-->
+<div class="person_header">
+
+    <!--Person Image-->
+    <div class="person_header_imagearea">
+        <div class="person_header_image" style=" background: url('{{person.image_servingURL}}') no-repeat; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+    </div>
+
+    <!--Person Title-->
+    <div class="person_header_title">{{person.displayname | limitTo: 25 }}{{project.title.length > 25 ? '...' : ''}}</div>
+
+    <div class="person_header_details">
+        Joined: {{person.date_created | date:'MM/dd/yyyy'}}
+        <br />
+        Number of Projects: {{person.projectcount}}
+    </div>
+    <!--Person Description-->
+    <div ng-show="ui.description=='less'" class="person_header_description">{{person.description | limitTo: 250 }}<a href="#" style="color:#eeeeee;" ng-click="ui.description='more'">{{person.description.length > 250 ? ' more...' : ''}}</a></div>
+    <div ng-show="ui.description=='more'" class="person_header_description">{{person.description}} <a href="#" style="color:#eeeeee;" ng-click="ui.description='less'">Less ...</a> </div>
+
+    <!--Person Command Bar-->
+    <div class="project_commandbar" ng-show="ui.author==false">
+        
+        <!--SOCIAL COMMANDS-->
+        <span class="person_large_commands">
+                
+        <!--LIKE BUTTON-->
+        <span ng-switch on="uistate.like">
+        <span ng-switch-when="notliked"><a ng-click='social("like", person.id, "person", person.id)' class="project_commandbar_button">like</a></span>
+        <span ng-switch-when="liked"><a confirmed-click='unsocial("like", person.id, "person", person.id)' ng-confirm-click="Are you sure you want to Unlike?" class="project_commandbar_button">unlike</a></span>
+        <span ng-switch-when="thinking">thinking...</span>
+        <span ng-switch-when="loggedout"><a href="/login" class="project_commandbar_button">like</a></span>
+        <span ng-switch-when="loading" default>...</span>
+        </span>
+
+        <!--FOLLOW BUTTON-->
+        <span ng-switch on="uistate.follow">
+                    <span ng-switch-when="notfollowed"><a ng-click='social("follow", person.id, "person", person.id)' class="project_commandbar_button">follow</a></span>
+        <span ng-switch-when="followed"><a confirmed-click='unsocial("follow", person.id, "person", person.id)' ng-confirm-click="Are you sure you want to Unfollow?" class="project_commandbar_button">unfollow</a></span>
+        <span ng-switch-when="thinking">thinking...</span>
+        <span ng-switch-when="loggedout"><a href="/login" class="project_commandbar_button">follow</a></span>
+        <span ng-switch-when="loading" default>...</span>
+        </span>
+
+        <!--FLAG BUTTON-->
+        <span ng-switch on="uistate.flag">
+                    <span ng-switch-when="notflagged"><a confirmed-click='social("flag", person.id, "person", person.id)' ng-confirm-click="Are you sure you want to Flag?" class="project_commandbar_button">flag</a></span>
+        <span ng-switch-when="flagged"><a ng-click="toggleApproved()" class="project_commandbar_button">unflag</a></span>
+        <span ng-switch-when="thinking">thinking...</span>
+        <span ng-switch-when="loggedout"><a href="/login" class="project_commandbar_button">flag</a></span>
+        <span ng-switch-when="loading" default>...</span>
+        </span>
+
+        <!--FACEBOOK SHARE BUTTON-->
+        <span style="float:right;">         
+                <a style="color:#ffffff" target="_blank" OnClick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250'); return false;" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.projcts.com/project/{{project.id}}&picture={{project.servingurl}}=s360&title={{project.title}}&description={{project.description}}">
+                <img src="/1.1.1/img/interface/buttons/button_share_fb.png" style="width:20px;" />FACEBOOK
+                </a>
+                &nbsp; 
+            </span>
+
+    </div>
+
+</div>
+
+<div class="person_navbar">
+    <a ng-href="person/{{person.id}}" ng-class="{person_navbar_selected : routedata.title == 'Home', person_navbar_deselected : routedata.title !== 'Home'}">HOME</a>
+    <a ng-href="person/{{person.id}}/projects" ng-class="{person_navbar_selected : routedata.title == 'Projects', person_navbar_deselected : routedata.title !== 'Projects'}">PROJECTS</a>
+    <a ng-href="person/{{person.id}}/likes" ng-class="{person_navbar_selected : routedata.title == 'Likes', person_navbar_deselected : routedata.title !== 'Likes'}">LIKES</a>
+    <a ng-href="person/{{person.id}}/following" ng-class="{person_navbar_selected : routedata.title == 'Following', person_navbar_deselected : routedata.title !== 'Following'}">FOLLOWING</a>
+    <a ng-href="person/{{person.id}}/followers" ng-class="{person_navbar_selected : routedata.title == 'Followers', person_navbar_deselected : routedata.title !== 'Followers'}">FOLLOWERS</a>
+    <a ng-href="person/{{person.id}}/comments" ng-class="{person_navbar_selected : routedata.title == 'Comments', person_navbar_deselected : routedata.title !== 'Comments'}">COMMENTS</a>
+</div>

@@ -1,0 +1,52 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Console Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar_console.html'"></div>
+
+    <!--Project Header-->
+    <div class="project_header">
+
+        <!--Project Image-->
+        <div class="project_header_imagearea">
+            <div class="icon_project" style=" background: url('{{project.image_servingURL}}=s360') no-repeat; background-position: center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+        </div>
+
+        <!--Project Creator Area-->
+        <div class="project_header_creatorarea">
+            <a ng-href="person/{{project.owner}}">
+                <span style="color: #ffffff; margin-right:10px;">by {{project.ownername}}</span>
+                <img ng-src="{{project.ownericonurl}}" width="50px" style="vertical-align:middle;" />
+            </a>
+        </div>
+
+        <!--Project Title-->
+        <div class="project_header_title">{{project.title | limitTo: 25 }}{{project.title.length > 25 ? '...' : ''}}</div>
+
+        <!--Project Description-->
+        <div ng-show="ui.description=='less'" class="project_header_description">{{project.description | limitTo: 250 }}<a href="#" style="color:#eeeeee;" ng-click="ui.description='more'">{{project.description.length > 250 ? ' more...' : ''}}</a></div>
+        <div ng-show="ui.description=='more'" class="project_header_description">{{project.description}} <a href="#" style="color:#eeeeee;" ng-click="ui.description='less'">Less ...</a> </div>
+
+        <!--Project Command Bar-->
+        <div class="project_commandbar">
+            <a ng-href="/console/editproject/{{project.id}}" class="console_editproject_commandbutton">EDIT PROJECT DETAILS</a>
+            <a confirmed-click="deleteProject()" ng-confirm-click="Are you sure you want to delete?" class="console_editproject_commandbutton">DELETE PROJECT</a>
+        </div>
+
+    </div>
+
+    <div class="project_infopanel" ng-show="ui.infopanel_state">Project Info:</div>
+
+    <!--Step List-->
+    <a href="/console/addasset/{{project.id}}">
+        <div class="icon_project" style="background: url('/1.1.1/img/interface/buttons/button_addstep.png') no-repeat; background-position: center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+        </div>
+    </a>
+
+    <div ng-repeat="asset_icon in project.asset_icons">
+        <div ng-include="'/1.1.1/html/components/icon_asset_edit.html'"></div>
+    </div>
+
+</div>

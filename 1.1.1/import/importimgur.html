@@ -1,0 +1,157 @@
+<!-- <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '1688435164758419',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v3.0'
+    });
+          FB.ui(
+ {
+  method: 'share',
+  href: 'https://developers.facebook.com/docs/'
+}, function(response){});
+  };
+    
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+       
+</script> -->
+
+
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'1.1.1/html/components/navbar.html'"></div>
+
+    <!--SELECT ALBUM FORM-->
+    <!--------------------->
+    <div style="margin-top:40px; margin-bottom:40px;font-size:30px;">IMGUR IMPORT</div>
+
+    <!--View to Select the Imgur Album-->
+    <div>
+
+        <form class="form" ng-submit="getData(albumid)">
+
+            <div class="form_element">
+
+                <input ng-model="albumid" class="form_textinput" type="text" required />
+
+                <input type="submit" />
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!--PROJECT FORM BEGIN-->
+    <form name="projectForm" ng-submit="addproject()" novalidate>
+
+        <!--FORM MODE: Select Project Image-->
+        <div ng-show="uistate == 'viewimgurdata'">
+
+            <hr> IMGUR PROJECT DATA
+
+            <button ng-click="save()">IMPORT</button>
+
+            <br>
+            <br>
+
+            <div style="float:left; padding-right:20px;">
+
+                <!--IMAGE WORKSPACE-->
+                <label class="file_selection_box">
+
+                    <!--FILE UPLOADER-->
+                    <input id="projectfile001" type="file" hidden="true" loadimage />
+
+                    <!--LOADED IMG-->
+                    <img id="projectimage001" src="" style="max-height:500px; max-width:100%; border-radius: 10px;" />
+
+                </label>
+
+            </div>
+
+            <!--PROJECT FORM TITLE-->
+            <div class="form_element">
+
+                <!--INPUT FOR TITLE-->
+                <input name="title" ng-focus="projectForm.title.$setUntouched();" ng-model="project.title" class="form_textinput" type="text" placeholder="Title (required)" required minlength="2" />
+
+                <!--ERROR MESSAGES-->
+                <div class="form_error" ng-messages="projectForm.title.$error" ng-if="!projectForm.title.$pristine && projectForm.title.$touched">
+                    <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+                </div>
+
+            </div>
+
+            <!--PROJECT FORM DESCRIPTION-->
+            <div class="form_element">
+
+                <!--INPUT FOR DESCRIPTION-->
+                <textarea name="description" ng-focus="projectForm.description.$setUntouched();" ng-model="project.description" class="form_textinput" rows="6" cols="40" placeholder="Description"></textarea>
+
+                <!--ERROR MESSAGES-->
+                <div class="form_error" ng-messages="projectForm.description.$error" ng-if="!projectForm.description.$pristine && projectForm.description.$touched">
+                    <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+                </div>
+
+            </div>
+
+            <!--INSPIRED/FOUND/WIP-->
+            <div class="form_element">
+                <div class="form_textinput_label" style="margin-bottom:15px;">
+                    <input type="checkbox" ng-model="project.wip">&nbsp;WIP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" ng-model="project.found">&nbsp;Found &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" ng-model="project.inspired">&nbsp;Inspired</div>
+
+                <div ng-show="project.wip == true" style="margin:10px;">
+                    <!--PROGRESS SLIDER-->
+                    <label for="progress-slider">progress: {{project.progress}}% </label>
+                    <input type="range" min="0" max="100" value="100" id="progress-slider" step="5" ng-model="project.progress">
+                </div>
+
+                <div ng-show="project.found == true">
+                    <input type="text" class="form_textinput" ng-model="project.source" size="30" style="margin-bottom:10px;" placeholder=" link to source" />
+                </div>
+
+                <div ng-show="project.inspired == true">
+                    <input type="text" class="form_textinput" ng-model="project.inspiration" size="30" style="margin-bottom:10px;" placeholder=" inspired by" />
+                </div>
+
+            </div>
+
+            <!--PROJECT TAGS-->
+            <div class="form_element">
+                <tags-input ng-model="tags" display-property="title" placeholder=" project tags" min-length="3" replace-spaces-with-dashes="true" allowed-tags-pattern="^[a-zA-Z0-9-]*$">
+                    <auto-complete source="loadSuggestions($query)" min-length="1" max-results-to-show="20" load-on-focus="true" load-on-empty="false">
+                    </auto-complete>
+                </tags-input>
+            </div>
+
+        </div>
+
+    </form>
+    
+    <hr>
+    
+    <div ng-repeat="step in steps ">
+    <div style="display:inline-block; width:600px; text-align:right">
+    <img id="{{step.id}}" src="{{step.link}}" style="height:200px;"  crossOrigin="anonymous">
+    </div>
+    
+    <div style="width:600px; height:200px; display:inline-block; vertical-align: top;">
+        title: {{step.title}}<br>
+        description: {{step.description}}
+    </div>
+
+    
+    </div>
+
+</div>

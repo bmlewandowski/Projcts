@@ -1,0 +1,134 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+ 
+    
+    <div slider images="images.assets"></div>
+<!--
+    <img ng-src="{{asset.image_servingURL}}=s800" />
+    <h3>{{asset.title}}</h3>
+    <div class="project_banner_date">created: {{asset.date_created | date:"MM/dd/yyyy"}}<span ng-show="project.date_modified != null"> | modified: {{asset.date_modified | date:"MM/dd/yyyy"}}</span></div>
+    {{asset.description}}
+-->
+
+    
+       <!--COMMENTS AREA BEGIN-->
+
+        <div class="comment_area">
+            
+            <!--REPLY BEGIN-->
+            
+                <div class="comment_wrapper" ng-show="replycomment.id != 0">
+
+                    <!--USER NAME-->
+                    <div class="comment_username" style="margin-left:5px;">
+                        <a href="/person/{{comment.owner}}" class="ng-binding">
+                            <strong>REPLYING TO</strong> {{replycomment.ownername}}
+                        </a>
+                    </div>
+
+                    <!--USER PICTURE-->
+                    <a href="/#/person/{{replycomment.owner}}">
+                        <img class="comment_pic" src="{{replycomment.ownericon}}">
+                    </a>  
+
+                    <!--COMMENT BOX-->
+                    <img class="comment_talk_bubble" src="1.1.1/img/interface/comments/talk_bubble.png" />
+
+                    <div class="comment_textbox ng-binding">
+
+                         {{replycomment.text}}
+                                                
+                        <div class="comment_date">{{replycomment.date_created | date:"MM/dd/yyyy 'at' h:mma"}}</div>                 
+
+                    </div>
+                    
+                    <div style="margin:10px;text-align:right;">
+                        <a ng-click='cancelReply()'>
+                            <div class="comment_btn" style="margin-top:10px;margin-bottom:10px;">CANCEL</div>
+                        </a>
+                    </div>
+                    
+                    <div class="clearfloat"></div>
+
+                </div> 
+                      
+            <!--REPLY END-->   
+            
+            Add Comment
+            <form class="comment_form" name="comment_form">       
+                <textarea ng-model="addcomment.message" class="comment_textinput" id="commentText" required></textarea>
+                <div ng-switch on="uistate.flag" style="margin-top:10px;text-align:right;">
+                <span ng-switch-when="loggedout">
+                    <a href="/login">
+                    <div class="comment_btn">login</div>
+                    </a>
+                </span>
+                <span ng-switch-default>
+                    <div class="comment_btn" ng-click='comment_form.$valid && addcomment("comment", asset.id, "asset", asset.owner, replycomment.id)'>
+                        COMMENT
+                    </div>
+                    </span>
+                </div>    
+            </form>
+
+            <!--COMMENTS REPEATER-->
+
+            <div ng-repeat="(key, comment) in comments"> 
+
+                <div class="comment_wrapper">
+
+                    <!--USER NAME-->
+                    <div class="comment_username"><a href="/person/{{comment.owner}}" class="ng-binding">{{comment.ownername}}</a></div>
+
+                    <!--USER PICTURE-->
+                    <a href="/person/{{comment.owner}}"><img ng-src="{{comment.ownericon}}" class="comment_pic" ></a> 
+
+                    <!--COMMENT BOX-->
+                    <img class="comment_talk_bubble" src="1.1.1/img/interface/comments/talk_bubble.png" />
+
+                    <div class="comment_textbox ng-binding">
+                
+                        <div class="comment_details" ng-show="comment.reply != 0">
+                                in reply to: {{comment.reply}}
+                        </div> 
+
+                        {{comment.text}}
+                                                
+                        <div class="comment_date">{{comment.date_created | date:"MM/dd/yyyy 'at' h:mma"}}</div>                 
+
+                    </div>
+
+                    <div class="clearfloat"></div>
+
+                    <!--SOCIAL COMMANDS-->
+
+                    <div class="comment_commands">
+                     
+                        <!--LIKE BUTTON-->
+                        <span ng-switch on="comment.likeStatus">
+
+                            <span ng-switch-default>loading...</span>
+                            <span ng-switch-when="notliked"><a ng-click='like(comment.id, comment.owner, "project", project.id)'>like</a></span>
+                            <span ng-switch-when="liked"><a ng-click='unlike(comment.id, comment.owner, "project", project.id)'>unlike</a></span>
+                            <span ng-switch-when="loggedout"><a href="/login">like</a></span>
+                        <!--REPLY BUTTON--> 
+                        </span> | <a ng-click='reply(comment)'>reply</a> | <span ng-switch on="comment.flagStatus">
+                        <!--FLAG BUTTON--> 
+                            <span ng-switch-default>loading...</span>
+                            <span ng-switch-when="notflagged"><a confirmed-click='flag(comment.id, comment.owner, "project", project.id)' ng-confirm-click="Are you sure you want to Flag?">flag</a></span>
+                            <span ng-switch-when="flagged"><a ng-click='unflag(comment.id, comment.owner, "project", project.id)'>unflag</a></span>
+                            <span ng-switch-when="loggedout"><a href="/login">flag</a></span>
+
+                        </span>
+
+                    </div>
+
+                </div>                    
+            </div>
+        </div>
+        
+    <!--COMMENTS AREA END-->   
+    
+</div>

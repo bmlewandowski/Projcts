@@ -1,0 +1,219 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Console Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar_console.html'"></div>
+
+    <!--Main Area-->
+    <div class="console_addproject_area">
+
+        <!--PROJECT FORM BEGIN-->
+        <form name="projectForm" ng-submit="addproject()" novalidate>
+            
+                    
+            <!--FORM MODE: Select Image-->
+            <div ng-show="form.mode == 'selectimage'">
+                        
+                <!--DROPZONE BEGIN-->        
+                <div directive dropimage="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3" ctrl-fn="imageChg()">                   
+                    
+                    <!--IMAGE WORKSPACE-->               
+                    <label class="file_selection_box">
+
+                        <!--FILE UPLOADER-->
+                        <input directive loadimage id="file001" type="file" hidden="true" loadimage="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3" />
+
+                        <!--LOADED IMG-->
+                        <img id="image001" ng-src={{image}} style="max-height:500px; max-width:100%; border-radius: 10px;" />
+
+                    </label>
+                </div>
+                <!--DROPZONE END-->
+
+                <div style="font-size:24px;" ng-show="form.imagechanged == false">Add an Image to Use as Your Project Cover</div>
+                
+                <div ng-show="form.imagechanged == true">
+                    <!--CONTINUE BUTTON-->
+                    <img ng-click="form.mode='enterdata'" ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </div>
+
+            </div>
+
+            <!--FORM MODE: Enter the Project Data-->
+            <div ng-show="form.mode == 'enterdata'">
+
+                <div style="font-size:24px">Give Your Project Some Details</div>
+
+                <!--PROJECT FORM TITLE-->
+                <div class="form_element">
+
+                    <!--INPUT FOR TITLE-->
+                    <input name="title" ng-focus="projectForm.title.$setUntouched();" ng-model="project.title" class="form_textinput" type="text" placeholder="Title (required)" required minlength="2" />
+
+                    <!--ERROR MESSAGES-->
+                    <div class="form_error" ng-messages="projectForm.title.$error" ng-if="!projectForm.title.$pristine && projectForm.title.$touched">
+                        <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+                    </div>
+
+                </div>
+
+                <!--PROJECT FORM DESCRIPTION-->
+                <div class="form_element">
+
+                    <!--INPUT FOR DESCRIPTION-->
+                    <textarea name="description" ng-focus="projectForm.description.$setUntouched();" ng-model="project.description" class="form_textinput" rows="6" cols="40" placeholder="Description"></textarea>
+
+                    <!--ERROR MESSAGES-->
+                    <div class="form_error" ng-messages="projectForm.description.$error" ng-if="!projectForm.description.$pristine && projectForm.description.$touched">
+                        <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+                    </div>
+
+                </div>
+
+                <!--PROJECT TAGS-->
+                <tags-input ng-model="tags" display-property="title" placeholder=" Tags" min-length="3" replace-spaces-with-dashes="true" allowed-tags-pattern="^[a-zA-Z0-9-]*$">
+                    <auto-complete source="loadSuggestions($query)" min-length="1" max-results-to-show="20" load-on-focus="true" load-on-empty="false"></auto-complete>
+                </tags-input>
+
+                <!--INSPIRED/FOUND/WIP-->
+                <div class="form_element">
+                    <div class="form_textinput_label" style="margin-bottom:15px;">
+                        <label>
+                            <input class="form_checkbox" type="checkbox" ng-model="project.wip"><span class="form_checkboxlabel">WIP</span>
+                        </label>
+
+                        <label>
+                            <input class="form_checkbox" type="checkbox" ng-model="project.found"><span class="form_checkboxlabel">Found</span>
+                        </label>
+
+                        <label>
+                            <input class="form_checkbox" type="checkbox" ng-model="project.inspired"><span class="form_checkboxlabel">Inspired</span>
+                        </label>
+                    </div>
+
+                    <div ng-show="project.wip == true" style="margin:10px; width:600px;margin-left: auto;margin-right: auto;">
+                        <!--PROGRESS SLIDER-->
+                        <label for="progress-slider">progress: {{project.progress}}% </label>
+                        <input type="range" min="0" max="100" value="100" id="progress-slider" step="5" ng-model="project.progress">
+                    </div>
+
+                    <div ng-show="project.found == true">
+                        <input type="text" class="form_textinput" ng-model="project.source" size="30" style="margin-bottom:10px;" placeholder=" link to source" />
+                    </div>
+
+                    <div ng-show="project.inspired == true">
+                        <input type="text" class="form_textinput" ng-model="project.inspiration" size="30" style="margin-bottom:10px;" placeholder=" inspired by" />
+                    </div>
+
+                </div>
+
+                <!--FORM SUBMIT BUTTON-->
+                <div class="form_element" ng-switch="form.loading">
+
+                    <!--IF THE AJAX IS NOT SENDING DATA, SHOW THIS-->
+                    <div ng-switch-default>
+                        <div ng-switch="projectForm.$invalid">
+
+                            <!--IF THE FORM IS VALID, SHOW THIS-->
+                            <div ng-switch-default>
+                                <input type="image" src="/1.1.1/img/interface/buttons/button_continue.png" ng-disabled="" style="border-radius: 10px;" />
+                            </div>
+
+                            <!--IF THE FORM IS NOT VALID, SHOW THIS-->
+                            <div ng-switch-when="true">
+                                <img src="/1.1.1/img/interface/buttons/button_continue_dim.png" style="border-radius: 10px;" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--IF THE AJAX IS SENDING DATA, SHOW THIS-->
+                    <div ng-switch-when="true">
+                        <img src="/1.1.1/img/interface/buttons/button_loading.gif" />
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--FORM MODE: Show Progress-->
+            <div ng-show="form.mode == 'showprogress'">
+
+                <div style="font-size:30px; margin-top:150px; margin-bottom:50px;">{{status}}</div>
+
+                <div>
+                    <div class="form_progressbar">
+                        <div class="form_progressbar_status" style="width:{{progress}}%;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--FORM MODE: Show Min Width Error-->
+            <div ng-show="form.mode == 'error_minwidth'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_minwidth.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Min Height Error-->
+            <div ng-show="form.mode == 'error_minheight'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_minheight.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Portrait Aspect Ratio Error-->
+            <div ng-show="form.mode == 'error_portraitratio'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_portraitratio.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Portrait Aspect Ratio Error-->
+            <div ng-show="form.mode == 'error_landscaperatio'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_landscaperatio.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

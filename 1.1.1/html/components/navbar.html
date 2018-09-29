@@ -1,0 +1,83 @@
+<div class="navbar" ylock>
+
+    <div class="navbar_left">
+
+        <a ng-click="navpanel_show()"><img src="/1.1.1/img/interface/navbar/button_more.png" alt="More" /></a>
+        <!--        <a href="google.com"><img src="/1.1.1/img/interface/navbar/button_messages.png" alt="Messages" /></a>-->
+        <a ng-click="searchpanel_toggle()"><img src="/1.1.1/img/interface/navbar/button_search.png" alt="Search" /></a>
+
+    </div>
+
+    <div class="navbar_right">
+
+        <div ng-switch on="$root.firebaseUser != null">
+
+            <div ng-switch-default>
+
+                <a href="/login/" class="navbar_link">Login</a>
+
+                <a href="/register/one/" class="navbar_link">Sign Up</a>
+
+            </div>
+
+            <div ng-switch-when=true>
+
+                <a ng-href="/console/home/">
+                    <div class="navbar_link">{{$root.firebaseUser.displayName}}</div>
+                </a>
+
+                <a ng-href="/console/home/"><img ng-src='{{$root.firebaseUser.photoURL}}' style="margin-top:5px; margin-right:15px;" height='60'></a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="navbar_center">
+
+        <a href="/"><img src="/1.1.1/img/interface/navbar/navbar_logo.png" alt="Projcts" /></a>
+
+    </div>
+
+</div>
+
+<div class="searchpanel" ng-class="searchpanel_state">
+
+<!--    <input id="navsearch" placeholder="WHAT ARE YOU INTO?" class="searchpanel_input" />-->
+    
+<!--    <img src="/1.1.1/img/interface/navbar/button_search.png" />-->
+    
+    <span angucomplete-alt id="navsearch" placeholder="WHAT ARE YOU INTO?" maxlength="50" pause="100" selected-object="searchSelected" input-changed="inputChanged" local-data="suggests" search-fields="title" title-field="title" minlength="1" input-class="searchpanel_input">
+    </span>
+    
+</div>
+
+<div class="navpanel" ng-hide="navpanel_state">
+
+    <a ng-click="navpanel_hide()">
+        <div style="font-size:30px; text-align:right; padding-right:20px; color:#bbbbbb;">
+            X
+        </div>
+    </a>
+
+<!--    <a hrf="/console/home/">Console</a>-->
+    <div style="font-size:30px; padding-left:20px;padding-top:10px;">
+        
+        <a href="/console/home/"><div class="navpanel_header">My Projects</div></a>
+        <a href="/info/"><div class="navpanel_item">-About</div></a>
+        <a href="/terms/"><div class="navpanel_item">-Terms</div></a>
+        <a href="/privacy/"><div class="navpanel_item">-Privacy</div></a>
+        <a href="/contact/"><div class="navpanel_item">-Contact</div></a>
+        <br />      
+        <div class="navpanel_header">Popular Tags</div>
+         <a href="/tagged/-KDMYynBCT1PqG-rRAo8/"><div class="tag-public-feature-nav">backyard</div></a>
+         <a href="/tagged/-KDIibzEVNV9ucPlgEYh/"><div class="tag-public-feature-nav">woodworking</div></a>
+         <a href="/tagged/-KDIiQdz7VnQ_46gAy2X/"><div class="tag-public-feature-nav">metalworking</div></a>
+         <a href="/tagged/-KDIjmny3cIlvWRaXxNq/"><div class="tag-public-feature-nav">electronics</div></a>
+         <a href="/tagged/-KDIk5BQBl7bCjCElme1/"><div class="tag-public-feature-nav">art</div></a>
+         <a href="/tagged/-KEK9C_XU487Ed7htDT9/"><div class="tag-public-feature-nav">games</div></a>
+         <a href="/tagged/-KDIk0UMpWljMixDjapE/"><div class="tag-public-feature-nav">music</div></a>
+    </div>
+
+</div>

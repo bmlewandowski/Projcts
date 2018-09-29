@@ -1,0 +1,109 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'1.1.1/html/components/navbar.html'"></div>
+
+    <!--Banner Area-->
+<!--
+    <div class="banner">
+
+        <div class="banner_area">
+
+            <div class="banner_home_label">Show Off Progress on Your Projects</div>
+
+        </div>
+
+    </div>
+-->
+
+<!--Banner Area-->
+<div ng-switch on="banner" class="animate-switch-container">
+
+    <div ng-switch-when="1" class="animate-switch">
+        <a href="/tagged/-LBpDe88thZN0A8FIcB2/"><div class="banner_home1"></div></a>
+    </div>
+
+    <div ng-switch-when="2" class="animate-switch">
+        <a href="/tagged/-KDIjmny3cIlvWRaXxNq/"><div class="banner_home2"></div></a>
+    </div>
+
+    <div ng-switch-when="3" class="animate-switch">
+        <a href="/tagged/-KDOkrGxmPNUzJH2vnat/"><div class="banner_home3"></div></a>
+    </div>
+
+    <div ng-switch-when="4" class="animate-switch">
+        <a href="/tagged/-KDM_8tu38R-wo2GwA_Q/"><div class="banner_home4"></div></a>
+    </div>
+
+    <div ng-switch-when="5" class="animate-switch">
+        <a href="/tagged/-KDMY_sT0xiBvzjpcTaR/"><div class="banner_home5"></div></a>
+    </div>   
+    <div ng-switch-when="6" class="animate-switch">
+        <a href="/tagged/-KDIiQdz7VnQ_46gAy2X/"><div class="banner_home6"></div></a>
+    </div>
+
+    <div class="banner_home_label">
+
+        <span ng-switch on="banner" style="margin-left:10px">
+            <a ng-click="selectSlide(1)"><img ng-switch-default ng-src="/1.1.1/img/interface/buttons/button_banner_dormate.png"></a>
+            <a ng-click="selectSlide(1)"><img ng-switch-when="1" ng-src="/1.1.1/img/interface/buttons/button_banner_active.png"></a>
+        </span>
+
+        <span ng-switch on="banner" style="margin-left:10px">
+            <a ng-click="selectSlide(2)"><img ng-switch-default ng-src="/1.1.1/img/interface/buttons/button_banner_dormate.png"></a>
+            <a ng-click="selectSlide(2)"><img ng-switch-when="2" ng-src="/1.1.1/img/interface/buttons/button_banner_active.png"></a>
+        </span>
+
+        <span ng-switch on="banner" style="margin-left:10px">
+            <a ng-click="selectSlide(3)"><img ng-switch-default ng-src="/1.1.1/img/interface/buttons/button_banner_dormate.png"></a>
+            <a ng-click="selectSlide(3)"><img ng-switch-when="3" ng-src="/1.1.1/img/interface/buttons/button_banner_active.png"></a>
+        </span>
+
+        <span ng-switch on="banner" style="margin-left:10px">
+            <a ng-click="selectSlide(4)"><img ng-switch-default ng-src="/1.1.1/img/interface/buttons/button_banner_dormate.png"></a>
+            <a ng-click="selectSlide(4)"><img ng-switch-when="4" ng-src="/1.1.1/img/interface/buttons/button_banner_active.png"></a>
+        </span>
+
+        <span ng-switch on="banner" style="margin-left:10px">
+            <a ng-click="selectSlide(5)"><img ng-switch-default ng-src="/1.1.1/img/interface/buttons/button_banner_dormate.png"></a>
+            <a ng-click="selectSlide(5)"><img ng-switch-when="5" ng-src="/1.1.1/img/interface/buttons/button_banner_active.png"></a>
+        </span>
+        
+        <span ng-switch on="banner" style="margin-left:10px">
+            <a ng-click="selectSlide(6)"><img ng-switch-default ng-src="/1.1.1/img/interface/buttons/button_banner_dormate.png"></a>
+            <a ng-click="selectSlide(6)"><img ng-switch-when="6" ng-src="/1.1.1/img/interface/buttons/button_banner_active.png"></a>
+        </span>
+
+        <span style="margin-left:20px">What Are You Working With?</span>
+
+    </div>
+
+</div>
+    
+    <div ng-switch="loading">
+
+        <!--SHOW WHEN LOADING-->
+        <div ng-switch-when="true" style="text-align:center">
+
+            <img src="/1.1.1/img/interface/buttons/loading.gif">
+            <br />
+            LOADING...
+
+        </div>
+
+        <!--SHOW WHEN LOADED-->
+        <div ng-switch-when="false">
+            
+            <!--Project List-->
+            <div ng-repeat="(key, project_icon) in project_icons | orderBy:'date_modified' :true">
+
+                <div ng-include="'1.1.1/html/components/icon_project.html'"></div>
+
+            </div>
+            
+        </div>
+    </div>
+    
+
+
+</div>

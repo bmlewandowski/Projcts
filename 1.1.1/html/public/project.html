@@ -1,0 +1,259 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Project Header-->
+    <div class="project_header">
+
+        <!--Project Image-->
+        <div class="project_header_imagearea">
+            <div class="icon_project" style=" background: url('{{project.image_servingURL}}=s360') no-repeat; background-position: center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+
+                <div class="icon_project_label">
+                    <!--Social-->  
+
+                    <!--Facebook-->                 
+                    <a style="color:#ffffff" target="_blank" OnClick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250'); return false;" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.projcts.com/project/{{project.id}}&picture={{project.image_servingURL}}=s360&title={{project.title}}&description={{project.description}}">
+                    <img src="/1.1.1/img/interface/buttons/button_share_fb.png" style="width:30px;" /></a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!--Twitter-->
+                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-show-count="false" target="_blank">
+                    <img src="/1.1.1/img/interface/buttons/button_share_twitter.png" alt="Tweet" style="width:30px;" />
+                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!--Pinterest--> 
+                    <a data-pin-do="buttonBookmark" data-pin-tall="true" data-pin-round="true" data-pin-save="false" href="https://www.pinterest.com/pin/create/button/" target="_blank">
+                    <img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_round_red_32.png" /></a>
+                    <script async defer src="//assets.pinterest.com/js/pinit.js"></script> 
+                </div>
+            
+            </div>
+        </div>
+
+        <!--Project Creator Area-->
+        <div class="project_header_creatorarea">
+            <a ng-href="person/{{project.owner}}">
+                <span style="color: #ffffff; margin-right:10px;"><span ng-show="project.found == true">found </span>by {{project.ownername}}</span>
+
+                <img ng-src="{{project.ownericonurl}}" width="50px" style="vertical-align:middle;" />
+            </a>                                  
+        </div>
+
+        <!--Project View Buttons-->
+                
+        <span style="margin-right:10px;margin-left:260px;">
+            <img src="1.1.1/img/interface/buttons/grid-icon-dim.png" style="height:30px;padding:3px;">
+            <a href="/project/{{project.id}}/page/" title="page view">
+                <img src="1.1.1/img/interface/buttons/page-icon.png" style="height:30px;padding:3px;">
+            </a>
+        </span>
+
+              
+  
+        <!--Project Title-->
+        
+        <div class="project_header_title">
+            {{project.title | limitTo: 25 }}{{project.title.length > 25 ? '...' : ''}}
+        </div>
+
+        <!--Project Description-->
+        <div ng-show="ui.description=='less'" class="project_header_description">{{project.description | limitTo: 250 }}
+            <a href="#" style="color:#eeeeee;" ng-click="ui.description='more'">
+                {{project.description.length > 250 ? '... more' : ''}}
+            </a>
+        </div>
+        <div ng-show="ui.description=='more'" class="project_header_description">{{project.description}} <a href="#" style="color:#eeeeee;" ng-click="ui.description='less'">... less</a> </div>
+
+        <!--Project Command Bar-->
+        <div class="project_commandbar">
+            
+            <!--Show Edit for Creator-->           
+            <span ng-show="ui.author==true">
+                <a ng-href="console/project/{{project.id}}">
+                    <span class="project_commandbar_button">EDIT</span>  
+                </a>
+            </span>
+            
+            <span ng-show="ui.author==false">
+                <!--LIKE BUTTON-->
+                <span ng-switch on="uistate.like">
+                    <span ng-switch-when="notliked"><a ng-click='social("like", project.id, "project", project.owner)' class="project_commandbar_button">LIKE</a></span>
+                <span ng-switch-when="liked"><a confirmed-click='unsocial("like", project.id, "project", project.owner)' ng-confirm-click="Are you sure you want to Unlike?" class="project_commandbar_button">UNLIKE</a></span>
+                <span ng-switch-when="thinking" class="project_commandbar_button">thinking...</span>
+                <span ng-switch-when="loggedout"><a href="/login" class="project_commandbar_button">LIKE</a></span>
+                <span ng-switch-when="loading" default></span>
+                </span>
+
+
+                <!--FLAG BUTTON-->
+                <span ng-switch on="uistate.flag">
+                    <span ng-switch-when="notflagged"><a confirmed-click='social("flag", project.id, "project", project.owner)' ng-confirm-click="Are you sure you want to Flag?" class="project_commandbar_button">FLAG</a></span>
+                <span ng-switch-when="flagged"><a ng-click='unsocial("flag", project.id, "project", project.owner)' class="project_commandbar_button">UNFLAG</a></span>
+                <span ng-switch-when="thinking" class="project_commandbar_button">thinking...</span>
+                <span ng-switch-when="loggedout"><a href="/login" class="project_commandbar_button">FLAG</a></span>
+                <span ng-switch-when="loading" default></span>
+                </span>
+            </span>
+            
+            <a class="project_commandbar_button" ng-click="infopanel_toggle()">DETAILS</a>
+                        
+        </div>
+        
+    </div>
+
+    <!--Info Panel-->
+    <div class="project_infopanel" ng-show="ui.infopanel_state">
+                
+        <div style="float:right;width:50%;">
+            
+            <div class="project_banner_extras">
+                <div ng-show="project.wip == true"><span style="color:#333333;background:#9ed9e9;padding:2px 8px 2px 8px;">WIP</span> {{project.progress}}% Complete</div>
+                <div ng-show="project.inspired == true">inspired by: <span style="color:#eee;">{{project.inspiration}}</span></div>
+                <div ng-show="project.found == true">source: <a href={{project.source}} target="_blank">{{project.source}}</a></div>
+                <div>created: {{project.date_created | date:'MM/dd/yyyy @ h:mma'}}</div>
+                <div ng-show="project.date_modified">last modified: {{project.date_modified | date:'MM/dd/yyyy @ h:mma'}}</div>
+            </div>
+        
+        </div>
+        
+        
+        <div style="float:left;width:50%;">
+            
+            Tags:
+            <span ng-repeat="(key, tag) in tags"><span class="tag-public"><a href="/tagged/{{tag.id}}">{{tag.title}}</a></span></span>
+        
+        </div>
+        
+        <div style="clear: both;"></div>
+    
+    </div>
+
+    <!--Step List-->
+    <div ng-repeat="asset_icon in project.asset_icons">
+
+        <div ng-include="'/1.1.1/html/components/icon_asset.html'"></div>
+
+    </div>
+    
+       <!--COMMENTS AREA BEGIN-->
+
+        <div class="comment_area">
+            
+            <!--REPLY BEGIN-->
+            
+                <div class="comment_wrapper" ng-show="replycomment.id != 0">
+
+                    <!--USER NAME-->
+                    <div class="comment_username" style="margin-left:5px;">
+                        <a href="/person/{{comment.owner}}" class="ng-binding">
+                            <strong>REPLYING TO</strong> {{replycomment.ownername}}
+                        </a>
+                    </div>
+
+                    <!--USER PICTURE-->
+                    <a href="/#/person/{{replycomment.owner}}">
+                        <img class="comment_pic" src="{{replycomment.ownericon}}">
+                    </a>  
+
+                    <!--COMMENT BOX-->
+                    <img class="comment_talk_bubble" src="1.1.1/img/interface/comments/talk_bubble.png" />
+
+                    <div class="comment_textbox ng-binding">
+
+                         {{replycomment.text}}
+                                                
+                        <div class="comment_date">{{replycomment.date_created | date:"MM/dd/yyyy 'at' h:mma"}}</div>                 
+
+                    </div>
+                    
+                    <div style="margin:10px;text-align:right;">
+                        <a ng-click='cancelReply()'>
+                            <div class="comment_btn" style="margin-top:10px;margin-bottom:10px;">CANCEL</div>
+                        </a>
+                    </div>
+                    
+                    <div class="clearfloat"></div>
+
+                </div> 
+                      
+            <!--REPLY END-->   
+            
+            Add Comment
+            <form class="comment_form" name="comment_form">       
+                <textarea ng-model="addcomment.message" class="comment_textinput" id="commentText" required></textarea>
+                <div ng-switch on="uistate.flag" style="margin-top:10px;text-align:right;">
+                <span ng-switch-when="loggedout">
+                    <a href="/login">
+                    <div class="comment_btn">login</div>
+                    </a>
+                </span>
+                <span ng-switch-default>
+                    <div class="comment_btn" ng-click='comment_form.$valid && addcomment("comment", project.id, "project", project.owner, replycomment.id)'>
+                        COMMENT
+                    </div>
+                    </span>
+                </div>    
+            </form>
+
+            <!--COMMENTS REPEATER-->
+
+            <div ng-repeat="(key, comment) in comments"> 
+
+                <div class="comment_wrapper">
+
+                    <!--USER NAME-->
+                    <div class="comment_username"><a href="/person/{{comment.owner}}" class="ng-binding">{{comment.ownername}}</a></div>
+
+                    <!--USER PICTURE-->
+                    <a href="/person/{{comment.owner}}"><img ng-src="{{comment.ownericon}}" class="comment_pic" ></a> 
+
+                    <!--COMMENT BOX-->
+                    <img class="comment_talk_bubble" src="1.1.1/img/interface/comments/talk_bubble.png" />
+
+                    <div class="comment_textbox ng-binding">
+                
+                        <div class="comment_details" ng-show="comment.reply != 0">
+                                in reply to: {{comment.reply}}
+                        </div> 
+
+                        {{comment.text}}
+                                                
+                        <div class="comment_date">{{comment.date_created | date:"MM/dd/yyyy 'at' h:mma"}}</div>                 
+
+                    </div>
+
+                    <div class="clearfloat"></div>
+
+                    <!--SOCIAL COMMANDS-->
+
+                    <div class="comment_commands">
+                     
+                        <!--LIKE BUTTON-->
+                        <span ng-switch on="comment.likeStatus">
+
+                            <span ng-switch-default>loading...</span>
+                            <span ng-switch-when="notliked"><a ng-click='like(comment.id, comment.owner, "project", project.id)'>like</a></span>
+                            <span ng-switch-when="liked"><a ng-click='unlike(comment.id, comment.owner, "project", project.id)'>unlike</a></span>
+                            <span ng-switch-when="loggedout"><a href="/login">like</a></span>
+                        <!--REPLY BUTTON--> 
+                        </span> | <a ng-click='reply(comment)'>reply</a> | <span ng-switch on="comment.flagStatus">
+                        <!--FLAG BUTTON--> 
+                            <span ng-switch-default>loading...</span>
+                            <span ng-switch-when="notflagged"><a confirmed-click='flag(comment.id, comment.owner, "project", project.id)' ng-confirm-click="Are you sure you want to Flag?">flag</a></span>
+                            <span ng-switch-when="flagged"><a ng-click='unflag(comment.id, comment.owner, "project", project.id)'>unflag</a></span>
+                            <span ng-switch-when="loggedout"><a href="/login">flag</a></span>
+
+                        </span>
+
+                    </div>
+
+                </div>                    
+            </div>
+        </div>
+        
+    <!--COMMENTS AREA END-->
+
+</div>
+

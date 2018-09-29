@@ -1,0 +1,172 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Main Area-->
+    <div class="form_main">
+
+        <!--USER IMAGE FORM BEGIN-->
+        <form name="userImageForm" ng-submit="addproject()" novalidate>
+
+            <!--FORM MODE: Select Image-->
+            <div ng-show="form.mode == 'selectimage'">
+
+                <div class="form_label">Click Your Picture to Change it</div>
+                
+                
+                <!--DROPZONE BEGIN-->        
+                <div directive dropimage="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3" ctrl-fn="imageChg()">                   
+                    
+                    <!--IMAGE WORKSPACE-->               
+                    <label class="file_selection_box">
+
+                        <!--FILE UPLOADER-->
+                        <input directive loadimage id="file001" type="file" hidden="true" loadimage="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3" />
+
+                        <!--LOADED IMG-->
+                        <img id="image001" ng-src={{image}} style="max-height:600px; max-width:100%; border-radius: 10px;" />
+
+                    </label>
+                    
+                </div>
+                <!--DROPZONE END-->
+                
+            </div>
+
+            <!--FORM MODE: Crop Image-->
+            <div ng-show="form.mode == 'cropimage'">
+
+                <!--CROP WORKSPACE-->
+                <div id="cropworkspace"></div>
+
+                <img ng-click="initialize()" src="/1.1.1/img/interface/buttons/button_cancel.png" style="border-radius: 10px;" />
+
+                <img ng-click="crop()" src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+            </div>
+
+            <!--FORM MODE: Verify Crop-->
+            <div ng-show="form.mode == 'verifycrop'">
+
+                <div class="form_label">Nice work... How does this look?</div>
+
+                <div style="margin-top:10px; margin-bottom:10px; width: 600px; height: 500px;">
+
+                    <div style="width: 300px;
+                                height: 300px;
+                                margin-right: auto;
+                                margin-left:auto;
+                                margin-bottom: 30px;
+                                background-color: darkgray;
+                                border-radius: 5px;
+                                position: relative;">
+
+                        <img id="personfull" src="" style="width:300px; border-radius: 5px;" />
+
+                        <div class="icon_project_label">
+
+                            {{$root.firebaseUser.displayName | limitTo: 20 }}{{project_icon.title.length > 20 ? '...' : ''}}
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <span style="font-size:28px; margin-right:10px; vertical-align: middle;">{{$root.firebaseUser.displayName}}</span>
+
+                        <img id="personicon" src="" style="width:100px; vertical-align: middle;" />
+
+                    </div>
+
+
+                </div>
+
+                <div>
+
+                    <img ng-click="form.mode='cropimage'" src="/1.1.1/img/interface/buttons/button_cancel.png" style="border-radius: 10px;" />
+
+                    <img ng-click="updateUserImage()" src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+                </div>
+            </div>
+
+            <!--FORM MODE: Show Progress-->
+            <div ng-show="form.mode == 'showprogress'">
+
+                <div style="font-size:30px; margin-top:150px; margin-bottom:50px;">{{status}}</div>
+
+                <div>
+                    <div class="form_progressbar">
+                        <div class="form_progressbar_status" style="width:{{progress}}%;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--FORM MODE: Show Min Width Error-->
+            <div ng-show="form.mode == 'error_minwidth'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_minwidth.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Min Height Error-->
+            <div ng-show="form.mode == 'error_minheight'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_minheight.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Portrait Aspect Ratio Error-->
+            <div ng-show="form.mode == 'error_portraitratio'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_portraitratio.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Portrait Aspect Ratio Error-->
+            <div ng-show="form.mode == 'error_landscaperatio'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_landscaperatio.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+</div>

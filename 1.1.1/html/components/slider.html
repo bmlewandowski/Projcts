@@ -1,0 +1,36 @@
+<div directive class="slider-main" resize ng-style="style()">
+    <div class="slider-image" ng-repeat="img in images" ng-if="$index == show" ng-class="{'slider-right':!nextimg,'slider-left':nextimg}">
+    
+
+        <div class="slider-image-inner" ng-style="{'background-image':'url({{img.image_servingURL}}=s0)'}" ng-class="{'show':$index==show}">
+            
+            <div class="back-button">
+            <a href="project/{{img.parent}}">BACK</a>
+            </div>
+            
+            <div class="title-area" ng-if="img.title || img.description">
+                <div class="title" ng-if="img.title">{{img.title}}</div>
+                <div class="description" ng-if="img.description">                  
+                    
+                    {{img.description}} 
+                                                  
+                </div>
+            </div>
+            
+            <div class="detail-area">
+                <div class="details">
+                    added: {{img.date_created | date:'MM/dd/yyyy @ h:mma'}}
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+    
+
+    
+    <div class="slider-controls">
+        <button class="btn-prev" ng-show="count>0" ng-click="prev()">prev</button>
+        <button class="btn-next" ng-show="count>0" ng-click="next()">next</button>
+    </div>
+</div>

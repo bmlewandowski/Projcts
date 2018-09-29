@@ -1,0 +1,21 @@
+<!--FORM BEGIN-->
+<form class="form" ng-submit="submit()" novalidate>
+
+    <!--CROP AREA-->
+    <div style="width:640px;">
+        <img id="image_workspace" style="width:512px; height:512px;" src="/1.1.1/img/interface/user/defaultuser_full.png" />
+    </div>
+
+    <!--FILE UPLOADER-->
+    <input id="fileinput" type="file" loadprofileimage/>
+
+    <!--SUBMIT BUTTON-->
+    <div class="form_element" ng-switch=welcome.loading>
+
+        <span ng-switch-default><input type="image" src="/1.1.1/img/interface/buttons/button_login.png"/></span>
+
+        <span ng-switch-when="true"><img src="/1.1.1/img/interface/buttons/button_loading.gif"/></span>
+
+    </div>
+
+</form>

@@ -1,0 +1,19 @@
+<a href="console/project/{{project_icon.id}}">
+    <div class="icon_project" style="    
+        background: url('{{project_icon.image_servingURL}}=s360') no-repeat;
+        background-position: center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;">
+
+        <div class="icon_project_label">
+
+            {{project_icon.title | limitTo: 20 }}{{project_icon.title.length > 20 ? '...' : ''}}
+
+        </div>
+
+        <div class="console_editproject_overlay"><img src="/1.1.1/img/interface/buttons/button_edit.png" style="border-radius: 5px;" /></div>
+
+    </div>
+</a>

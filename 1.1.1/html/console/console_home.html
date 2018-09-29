@@ -1,0 +1,85 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Console Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar_console.html'"></div>
+
+    <h3>News</h3>
+    
+    <!--HANDLE EMPTY RECORDs-->
+    <p ng-show="news.length < 1 || news == null">No News Items Found</p>
+    
+ <div ng-repeat="record in news" >
+        <!--ACTIVITY RECORD-->
+        <div class="activity_area">
+
+            
+            <!--ACTIVITY TITLE AREA-->
+            <div class="activity_title">
+
+                <!--ACTIVITY DATE TIME STAMP-->
+                <div class="activity_title_datetime">
+                    {{record.date_created | date:'MM/dd/yyyy @ h:mma'}}
+                </div>
+
+            </div>
+
+            <!--ACTIVITY RECORD BODY RIGHT SIDE-->
+            <div class="activity_area_right">
+
+                <div ng-switch on="record.type">
+
+                     <!--IF LIKE RECORD-->
+                    <div ng-switch-when="person">
+
+                        <div style="postion:absolute; width:300px;">
+                            <a href="/person/{{record.person}}">This user<a/> {{record.action}} a <a href="person/{{record.object}}">{{record.type}}</a>
+                        </div>
+
+                    </div>
+                    
+                     <!--IF FOLLOW RECORD-->
+                    <div ng-switch-when="project">
+
+                        <div style="postion:absolute; width:300px;">
+                            <a href="/person/{{record.person}}">This user<a/> {{record.action}} a <a href="project/{{record.object}}">{{record.type}}</a>
+                        </div>
+
+                    </div>
+                    
+                     <!--IF FLAG RECORD-->
+                    <div ng-switch-when="asset">
+
+                        <div style="postion:absolute; width:300px;">
+                            <a href="/person/{{record.person}}">This user<a/> {{record.action}} a <a href="asset/{{record.object}}">{{record.type}}</a>
+                        </div>
+
+                    </div>
+
+                     <!--IF COMMENT RECORD-->
+                    <div ng-switch-when="comment">
+
+                        <div style="postion:absolute; width:300px;">
+                            <a href="/person/{{record.person}}">This user<a/> {{record.action}} a <a href="{{record.object}}">{{record.type}}</a>
+                        </div>
+
+                    </div>
+
+                    <!--IF UNKNOWN RECORD TYPE-->
+                    <div ng-switch-default>
+
+                        UNKNOWN RECORD TYPE
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+                    
+</div>

@@ -1,0 +1,70 @@
+<!--REGISTER FORM BEGIN-->
+<form name="registerForm" class="form" ng-submit="register()" novalidate>
+
+    <!--REGISTER FORM EMAIL-->
+    <div class="form_element">
+
+        <!--INPUT FOR EMAIL-->
+        <input name="email" ng-focus="registerForm.email.$setUntouched(); registerForm.email.$setValidity('emailtaken', true);" ng-model="form.data.email" class="form_textinput" type="email" placeholder="Email" emailcheck required />
+
+        <!--ERROR MESSAGES-->
+        <div class="form_error" ng-messages="registerForm.email.$error" ng-if="!registerForm.email.$pristine && registerForm.email.$touched">
+            <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+        </div>
+
+    </div>
+
+    <!--REGISTER FORM DISPLAY NAME-->
+    <div class="form_element">
+
+        <!--INPUT FOR DISPLAY NAME-->
+        <input name="displayname" ng-focus="registerForm.displayname.$setUntouched(); registerForm.displayname.$setValidity('displaynametaken', true);" ng-model="form.data.displayname" class="form_textinput" type="text" placeholder="Display Name" displaynamecheck required minlength="4" maxlength="30" ng-pattern="/^[a-zA-Z0-9\s]+$/" />
+
+        <!--ERROR MESSAGES-->
+        <div class="form_error" ng-messages="registerForm.displayname.$error" ng-if="!registerForm.displayname.$pristine && registerForm.displayname.$touched">
+            <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+        </div>
+
+    </div>
+
+    <!--REGISTER FORM PASSWORD-->
+    <div class="form_element">
+
+        <!--INPUT FOR PASSWORD-->
+        <input name="password" ng-focus="registerForm.password.$setUntouched();" ng-model="form.data.password" class="form_textinput" type="password" placeholder="Password" required minlength="6" maxlength="25" />
+
+        <!--ERROR MESSAGES-->
+        <div class="form_error" ng-messages="registerForm.password.$error" ng-if="!registerForm.password.$pristine && registerForm.password.$touched">
+            <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+        </div>
+
+    </div>
+
+    <!--REGISTER FORM SUBMIT BUTTON-->
+    <div class="form_element" ng-switch="form.loading">
+
+        <!--IF THE AJAX IS NOT SENDING DATA, SHOW THIS-->
+        <div ng-switch-default>
+            <div ng-switch="registerForm.$invalid">
+
+                <!--IF THE FORM IS VALID, SHOW THIS-->
+                <div ng-switch-default>
+                    <input type="image" src="/1.1.1/img/interface/buttons/button_register.png" ng-disabled="" style="border-radius:10px;" />
+                </div>
+
+                <!--IF THE FORM IS NOT VALID, SHOW THIS-->
+                <div ng-switch-when="true">
+                    <img src="/1.1.1/img/interface/buttons/button_register_dim.png" style="border-radius:10px;" />
+                </div>
+
+            </div>
+        </div>
+
+        <!--IF THE AJAX IS SENDING DATA, SHOW THIS-->
+        <div ng-switch-when="true">
+            <img src="/1.1.1/img/interface/buttons/button_loading.gif" style="border-radius:10px;" />
+        </div>
+
+    </div>
+
+</form>

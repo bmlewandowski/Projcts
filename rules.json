@@ -1,0 +1,133 @@
+{
+    "rules": {
+
+        "activity": {
+
+            ".read": true,
+            ".write": "auth !== null"
+
+        },
+
+        "asset_icons": {
+
+            ".indexOn": "parent",
+            ".read": true,
+            "$uid": {
+                ".write": "$uid !== null"
+            }
+
+        },
+
+        "asset_social": {
+
+            ".read": true,
+            ".write": "auth !== null"
+        },
+
+        "assets": {
+
+            ".indexOn": "parent",
+            ".read": true,
+            "$uid": {
+                ".write": "$uid !== null"
+            }
+
+        },
+
+        "comment_social": {
+
+            ".read": true,
+            ".write": "auth !== null"
+
+        },
+
+        "comments": {
+
+            ".read": true,
+            ".write": "auth !== null"
+
+        },
+
+        "news": {
+
+            ".read": true,
+            ".write": "auth !== null"
+
+        },
+
+        "person_icons": {
+            ".read": true,
+            "$uid": {
+                ".write": "$uid !== null"
+            }
+
+        },
+
+        "person_social": {
+
+            ".read": true,
+            ".write": "auth !== null"
+        },
+
+        "persons": {
+
+            ".indexOn": "displaynamelower",
+            ".read": true,
+            "$uid": {
+                ".write": "$uid === auth.uid"
+            }
+        },
+
+        "project_icons": {
+
+            ".indexOn": "owner",
+            ".read": true,
+            "$uid": {
+                ".write": "$uid !== null"
+            }
+
+        },
+
+        "project_social": {
+
+            ".read": true,
+            ".write": "auth !== null"
+        },
+
+        "projects": {
+
+            ".read": true,
+            "$uid": {
+                ".write": "$uid !== null"
+            }
+
+        },
+
+        "social_plexus": {
+
+            ".read": true,
+            ".write": "auth !== null"
+
+        },
+
+        "tagged_objects": {
+            ".read": true,
+            ".write": "auth !== null"
+        },
+
+        "tags": {
+            ".read": true,
+            ".write": "auth !== null"
+        },
+
+        "users": {
+
+            ".indexOn": "email",
+            "$uid": {
+                ".read": "$uid === auth.uid",
+                ".write": "$uid === auth.uid"
+            }
+        }
+
+    }
+}

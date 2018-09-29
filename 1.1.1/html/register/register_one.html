@@ -1,0 +1,24 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Main Area-->
+    <div class="form_main">
+
+        <!--Register Form Title-->
+        <div class="form_label_account"><strong>Sign Up is Quick and Easy</strong></div>
+        
+        <span><em>"{{randomquote.text}}"</em></span>
+        
+        <!--Register Form-->
+        <div ng-include="'/1.1.1/html/components/form_register.html'"></div>
+
+        <!--Link to Register Area-->
+        <div style="margin-top:30px;">
+            <a class="form_message" href="/login/">Have an account already? Login Here</a>
+        </div>
+
+    </div>
+
+</div>

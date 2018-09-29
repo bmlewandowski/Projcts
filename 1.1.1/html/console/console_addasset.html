@@ -1,0 +1,189 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Console Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar_console.html'"></div>
+
+    <!--Main Area-->
+    <div class="console_addasset_area">
+
+        <!--FORM BEGIN-->
+        <form name="assetForm" ng-submit="addasset()" novalidate>
+
+            <!--FORM MODE: Select Image-->
+            <div ng-show="form.mode == 'selectimage'">
+
+                <!--File Types-->
+                <img src="/1.1.1/img/interface/buttons/console_asset_image.png" style="width:150px;" class="console_accountbutton" />
+                <img src="/1.1.1/img/interface/buttons/console_asset_document.png" style="width:150px;filter: brightness(50%);" class="console_accountbutton" />
+                <img src="/1.1.1/img/interface/buttons/console_asset_video.png" style="width:150px;filter: brightness(50%);" class="console_accountbutton" />
+                <br /> 
+                
+                <!--DROPZONE BEGIN-->        
+                <div directive dropimage="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3" ctrl-fn="imageChg()">                   
+                    
+                    <!--IMAGE WORKSPACE-->               
+                    <label class="file_selection_box">
+
+                        <!--FILE UPLOADER-->
+                        <input directive loadimage id="file001" type="file" hidden="true" loadimage="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3" />
+
+                        <!--LOADED IMG-->
+                        <img id="image001" ng-src={{image}} style="max-height:500px; max-width:100%; border-radius: 10px;" />
+
+                    </label>
+                </div>
+                <!--DROPZONE END-->
+              
+                <!--FILE UPLOAD TEXT-->
+                <div style="font-size:24px;" ng-show="form.imagechanged == false">Add a Step to your Project</div>
+
+                <!--CONTINUE BUTTON-->
+                <div ng-show="form.imagechanged == true">
+
+                    <img ng-click="form.mode='enterdata'" ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </div>
+
+            </div>
+
+            <!--FORM MODE: Enter the Data-->
+            <div ng-show="form.mode == 'enterdata'">
+
+                <div>Ok, great. Now just a little detail about your step....</div>
+
+                <!--FORM TITLE-->
+                <div class="form_element">
+
+                    <!--INPUT FOR TITLE-->
+                    <input name="title" ng-focus="assetForm.title.$setUntouched();" ng-model="asset.title" class="form_textinput" type="text" placeholder="Title (required)" required minlength="2" />
+
+                    <!--ERROR MESSAGES-->
+                    <div class="form_error" ng-messages="assetForm.title.$error" ng-if="!assetForm.title.$pristine && assetForm.title.$touched">
+                        <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+                    </div>
+
+                </div>
+
+                <!--FORM DESCRIPTION-->
+                <div class="form_element">
+
+                    <!--INPUT FOR DESCRIPTION-->
+                    <textarea name="description" ng-focus="assetForm.description.$setUntouched();" ng-model="asset.description" class="form_textinput" rows="6" cols="40" placeholder="Description"></textarea>
+
+                    <!--ERROR MESSAGES-->
+                    <div class="form_error" ng-messages="assetForm.description.$error" ng-if="!assetForm.description.$pristine && assetForm.description.$touched">
+                        <span ng-include="'/1.1.1/html/components/form_errors.html'"></span>
+                    </div>
+
+                </div>
+
+                <!--FORM SUBMIT BUTTON-->
+                <div class="form_element" ng-switch="form.loading">
+
+                    <!--IF THE AJAX IS NOT SENDING DATA, SHOW THIS-->
+                    <div ng-switch-default>
+                        <div ng-switch="assetForm.$invalid">
+
+                            <!--IF THE FORM IS VALID, SHOW THIS-->
+                            <div ng-switch-default>
+                                <input type="image" src="/1.1.1/img/interface/buttons/button_continue.png" ng-disabled="" style="border-radius: 10px;" />
+                            </div>
+
+                            <!--IF THE FORM IS NOT VALID, SHOW THIS-->
+                            <div ng-switch-when="true">
+                                <img src="/1.1.1/img/interface/buttons/button_continue_dim.png" style="border-radius: 10px;" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--IF THE AJAX IS SENDING DATA, SHOW THIS-->
+                    <div ng-switch-when="true">
+                        <img src="/1.1.1/img/interface/buttons/button_loading.gif" />
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!--FORM MODE: Show Progress-->
+            <div ng-show="form.mode == 'showprogress'">
+
+                <div style="font-size:30px; margin-top:150px; margin-bottom:50px;">{{status}}</div>
+
+                <div>
+                    <div class="form_progressbar">
+                        <div class="form_progressbar_status" style="width:{{progress}}%;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--FORM MODE: Show Min Width Error-->
+            <div ng-show="form.mode == 'error_minwidth'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_minwidth.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Min Height Error-->
+            <div ng-show="form.mode == 'error_minheight'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_minheight.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Portrait Aspect Ratio Error-->
+            <div ng-show="form.mode == 'error_portraitratio'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_portraitratio.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+            <!--FORM MODE: Show Portrait Aspect Ratio Error-->
+            <div ng-show="form.mode == 'error_landscaperatio'">
+
+                <a ng-click="initialize()">
+
+                    <div>
+                        <img style="max-height:500px; max-width:100%; border-radius: 10px;" src="/1.1.1/img/interface/buttons/error_landscaperatio.png" />
+                    </div>
+
+                    <img ng-src="/1.1.1/img/interface/buttons/button_continue.png" style="border-radius: 10px;" />
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

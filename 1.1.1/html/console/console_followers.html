@@ -1,0 +1,28 @@
+<div class="view_wrapper" setwidth>
+
+    <!--Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar.html'"></div>
+
+    <!--Console Navagation Bar-->
+    <div ng-include="'/1.1.1/html/components/navbar_console.html'"></div>
+
+    <h3>Followers</h3>
+    
+    <!--HANDLE EMPTY RECORDs-->
+    <p ng-show="followers.length < 1 || followers == null">No Followers Found</p>
+
+        <div ng-repeat="(key, follower) in followers" class="followlist">
+            <a ng-href="person/{{follower.person}}">
+            <div class="followbox">
+                <div class="followbox_image">
+                <img src="{{follower.image}}" style="width: 180px;" />
+                </div>
+                <div class="followbox_name">
+                {{follower.displayname}} 
+                </div>
+                since {{follower.date_created | date:"MM/dd/yyyy"}}
+            </div> 
+            </a>
+        </div>
+    
+</div>
